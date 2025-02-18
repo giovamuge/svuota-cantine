@@ -3,17 +3,41 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Estrazione Svuota Cantine - Quartiere 4 Firenze</title>
+		<title>Sorteggio Svuota Cantine - Quartiere 4 Firenze</title>
 		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
 		<div class="container">
-			<h1>Estrazione svuota cantine</h1>
+			<h1>Sorteggio svuota cantine</h1>
 			<form id="csvForm">
 				<input type="file" id="csvFile" accept=".csv" />
-				<button type="button" id="extractButton">Estrai</button>
+				<button type="button" id="extractButton">Avvia sorteggio</button>
+				<button type="button" id="exportButton" disabled>Download</button> <!-- Disabled by default -->
 			</form>
-			<div id="nameList"></div>
+			<div id="processingAnimation" style="display: none;">
+				<p>Processing...</p>
+				<div class="scrolling-names">
+					<!-- Names will be dynamically added here for animation -->
+				</div>
+				<div class="rotating-gear">
+					<svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+						<path d="M50 30a20 20 0 1 0 0 40 20 20 0 1 0 0-40zm0-10a30 30 0 1 1 0 60 30 30 0 1 1 0-60zm0-20a50 50 0 1 0 0 100 50 50 0 1 0 0-100z" fill="#000"/>
+					</svg>
+				</div>
+			</div>
+			<div id="nameList">
+				<table>
+					<thead>
+						<tr>
+							<th>Index</th>
+							<th>Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Rows will be dynamically added here -->
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<script src="script.js"></script>
 	</body>
