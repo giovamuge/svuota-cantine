@@ -1,0 +1,65 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
+
+.container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+h1 {
+	color: #333;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+#csvFile {
+	margin-bottom: 10px;
+}
+
+#extractButton {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+#extractButton:hover {
+	background-color: #0056b3;
+}
+
+#nameList {
+	margin-top: 20px;
+	animation: fadeIn 1s ease-in-out;
+}
+
+#nameList .name:nth-child(odd) {
+	background-color: #f2f2f2;
+}
+
+#nameList .name:nth-child(even) {
+	background-color: #ffffff;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
