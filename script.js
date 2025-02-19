@@ -17,7 +17,7 @@ document.getElementById("extractButton").addEventListener("click", () => {
 				// Hide the processing animation
 				document.getElementById("processingAnimation").style.display =
 					"none";
-			}, 150 * names.length); // Duration of the animation
+			}, 4 * 1000); // Duration of the animation
 		};
 		reader.readAsText(file);
 	} else {
@@ -83,7 +83,7 @@ function showProcessingAnimation(names) {
 			clearInterval(interval);
 			processingAnimation.style.display = "none";
 		}
-	}, 150); // Change name every 200ms
+	}, (4 * 1000) / names.length); // Change name every 200ms
 }
 
 window.addEventListener("beforeunload", (event) => {

@@ -68,10 +68,10 @@ button:disabled {
 	overflow: auto;
 }
 
-#nameList .name {
+/* #nameList .name {
 	padding: 5px 10px;
 	font-size: 18px;
-}
+} */
 
 #nameList .name:nth-child(odd) {
 	background-color: #f2f2f2;
