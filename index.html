@@ -11,8 +11,7 @@
 			<h1>Sorteggio svuota cantine</h1>
 			<form id="csvForm">
 				<input type="file" id="csvFile" accept=".csv" />
-				<button type="button" id="extractButton">Avvia sorteggio</button>
-				<button type="button" id="exportButton" disabled>Download</button> <!-- Disabled by default -->
+				<button type="button" id="extractButton" disabled>Avvia sorteggio</button>
 			</form>
 			<div id="processingAnimation" style="display: none;">
 				<p>Processing...</p>
@@ -24,19 +23,6 @@
 						<path d="M50 30a20 20 0 1 0 0 40 20 20 0 1 0 0-40zm0-10a30 30 0 1 1 0 60 30 30 0 1 1 0-60zm0-20a50 50 0 1 0 0 100 50 50 0 1 0 0-100z" fill="#000"/>
 					</svg>
 				</div>
-			</div>
-			<div id="nameList">
-				<table>
-					<thead>
-						<tr>
-							<th>Index</th>
-							<th>Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- Rows will be dynamically added here -->
-					</tbody>
-				</table>
 			</div>
 		</div>
 		<script src="script.js"></script>

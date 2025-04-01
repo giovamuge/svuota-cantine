@@ -1,3 +1,15 @@
+document.getElementById("csvFile").addEventListener("change", (event) => {
+	const fileInput = event.target;
+	const extractButton = document.getElementById("extractButton");
+
+	// Enable the button only if a file is selected and it has a .csv extension
+	if (fileInput.files.length > 0 && fileInput.files[0].name.endsWith(".csv")) {
+		extractButton.disabled = false;
+	} else {
+		extractButton.disabled = true;
+	}
+});
+
 document.getElementById("extractButton").addEventListener("click", () => {
 	const fileInput = document.getElementById("csvFile");
 	const file = fileInput.files[0];
@@ -9,10 +21,9 @@ document.getElementById("extractButton").addEventListener("click", () => {
 			showProcessingAnimation(names);
 			setTimeout(() => {
 				const randomNames = getRandomNames(names, names.length);
-				displayNames(randomNames);
 
-				// Enable the export button after extraction
-				document.getElementById("exportButton").disabled = false;
+				// Directly download the extracted names as a CSV
+				downloadCSV(randomNames);
 
 				// Hide the processing animation
 				document.getElementById("processingAnimation").style.display =
@@ -25,29 +36,10 @@ document.getElementById("extractButton").addEventListener("click", () => {
 	}
 });
 
-document.getElementById("exportButton").addEventListener("click", () => {
-	const nameList = document.getElementById("nameList");
-	const names = Array.from(nameList.getElementsByClassName("name")).map(
-		(nameElement) => nameElement.textContent
-	);
-	if (names.length > 0) {
-		const csvContent = "data:text/csv;charset=utf-8," + names.join("\n");
-		const encodedUri = encodeURI(csvContent);
-		const link = document.createElement("a");
-		link.setAttribute("href", encodedUri);
-		link.setAttribute("download", "extracted_names.csv");
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	} else {
-		alert("No names to export.");
-	}
-});
-
 function extractNamesFromCSV(text) {
-	return text.split("\n").map((row) => {
-		const [firstName, lastName] = row.split(",");
-		return `${firstName} ${lastName}`;
+	return text.split("\n").slice(1).map((row) => {
+		const [order, firstName, lastName] = row.split(",");
+		return { order: parseInt(order), name: `${firstName} ${lastName}` };
 	});
 }
 
@@ -56,15 +48,31 @@ function getRandomNames(names, count) {
 	return shuffled.slice(0, count);
 }
 
-function displayNames(names) {
-	const nameList = document.getElementById("nameList");
-	nameList.innerHTML = "";
-	names.forEach((name, index) => {
-		const nameElement = document.createElement("div");
-		nameElement.className = "name";
-		nameElement.textContent = `${index + 1}. ${name}`; // Include the row index
-		nameList.appendChild(nameElement);
-	});
+function downloadCSV(names) {
+	const csvHeader = "Nuovo Ordine,Ordine Originale,Nome e Cognome";
+	const csvContent =
+		"data:text/csv;charset=utf-8," +
+		[csvHeader]
+			.concat(
+				names.map(
+					({ order, name }, index) =>
+						`${index + 1},${order},${name}`
+				)
+			)
+			.join("\n");
+	const encodedUri = encodeURI(csvContent);
+
+	// Use the original file name with "estrazion" appended
+	const fileInput = document.getElementById("csvFile");
+	const originalFileName = fileInput.files[0].name.replace(".csv", "");
+	const newFileName = `${originalFileName}_estratti.csv`;
+
+	const link = document.createElement("a");
+	link.setAttribute("href", encodedUri);
+	link.setAttribute("download", newFileName);
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 }
 
 function showProcessingAnimation(names) {
@@ -77,7 +85,7 @@ function showProcessingAnimation(names) {
 	let index = 0;
 	const interval = setInterval(() => {
 		if (index < names.length) {
-			nameElement.textContent = names[index];
+			nameElement.textContent = names[index].name;
 			index++;
 		} else {
 			clearInterval(interval);
